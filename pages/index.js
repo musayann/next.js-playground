@@ -1,7 +1,30 @@
 import React from "react";
 import Link from "next/link";
 import { auth, firebase } from "../lib/firebase";
+import { withRouter } from 'next/router'
 class Home extends React.Component {
+  handleSignInViaLink() {
+    var actionCodeSettings = {
+      // URL you want to redirect back to. The domain (www.example.com) for this
+      // URL must be whitelisted in the Firebase Console.
+      url: "http://localhost:3000/about",
+      handleCodeInApp: true,
+    };
+    let email = "yannick@octan.group";
+    auth
+      .sendSignInLinkToEmail(email, actionCodeSettings)
+      .then(function (response) {
+        // The link was successfully sent. Inform the user.
+        // Save the email locally so you don't need to ask the user for it again
+        // if they open the link on the same device.
+        window.localStorage.setItem("emailForSignIn", email);
+        console.log(response);
+      })
+      .catch(function (error) {
+        // Some error occurred, you can inspect the code: error.code
+        console.log(error);
+      });
+  }
   handleSignIn = () => {
     var provider = new firebase.auth.GoogleAuthProvider();
     provider.addScope("https://www.googleapis.com/auth/contacts.readonly");
@@ -26,6 +49,13 @@ class Home extends React.Component {
         console.log(err);
       });
   };
+  // componentDidMount(){
+  //   this.props.router.push("/about");
+  // }
+  // openAbout = () => {
+  //   // const router = useRouter();
+  //   this.props.router.push("/about");
+  // };
   render() {
     return (
       <div>
@@ -43,6 +73,12 @@ class Home extends React.Component {
                 <p>Visit Dashboard</p>
               </a>
             </Link>
+            <button onClick={this.openAbout}>
+              about us
+            </button>
+            <button onClick={this.handleSignInViaLink}>
+              Sign In using Link
+            </button>
             <button onClick={this.handleSignIn}>Sign In using google</button>
             <button onClick={this.handleLogout}>Logout</button>
           </div>
@@ -97,4 +133,4 @@ class Home extends React.Component {
     );
   }
 }
-export default Home;
+export default  withRouter(Home);
