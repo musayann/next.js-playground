@@ -1,7 +1,7 @@
 import React from "react";
 import Link from "next/link";
 import { auth, firebase } from "../lib/firebase";
-import { withRouter } from 'next/router'
+import { withRouter } from "next/router";
 class Home extends React.Component {
   handleSignInViaLink() {
     var actionCodeSettings = {
@@ -73,14 +73,30 @@ class Home extends React.Component {
                 <p>Visit Dashboard</p>
               </a>
             </Link>
-            <button onClick={this.openAbout}>
+            <button
+              onClick={this.openAbout}
+              className="rounded border border-solid px-8 shadow capitalize mx-2"
+            >
               about us
             </button>
-            <button onClick={this.handleSignInViaLink}>
+            <button
+              onClick={this.handleSignInViaLink}
+              className="rounded border border-solid px-8 shadow capitalize mx-2"
+            >
               Sign In using Link
             </button>
-            <button onClick={this.handleSignIn}>Sign In using google</button>
-            <button onClick={this.handleLogout}>Logout</button>
+            <button
+              onClick={this.handleSignIn}
+              className="rounded border border-solid px-8 shadow capitalize mx-2"
+            >
+              Sign In using google
+            </button>
+            <button
+              onClick={this.handleLogout}
+              className="rounded border border-solid px-8 shadow capitalize mx-2"
+            >
+              Logout
+            </button>
           </div>
         </div>
         <style jsx>{`
@@ -100,7 +116,7 @@ class Home extends React.Component {
             text-align: center;
           }
           .row {
-            max-width: 880px;
+            max-width: 70%;
             margin: 80px auto 40px;
             display: flex;
             flex-direction: row;
@@ -133,4 +149,4 @@ class Home extends React.Component {
     );
   }
 }
-export default  withRouter(Home);
+export default withRouter(Home);
